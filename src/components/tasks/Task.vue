@@ -26,7 +26,8 @@
             </div>
             <!-- <div class="task-date">24 Feb 12:00</div> -->
         </div>
-        <TasksActions @edit="isEdit = true" v-show="!isEdit" />
+        <TasksActions 
+            @edit="isEdit = true" v-show="!isEdit" @remove="removeTask" />
     </li>
 </template>
 
@@ -39,7 +40,7 @@ const props = defineProps({
     task: Object
 })
 
-const emit = defineEmits(['updated', 'completed'])
+const emit = defineEmits(['updated', 'completed', 'removed'])
 
 
 const isEdit = ref(false)
@@ -64,6 +65,12 @@ const markTaskCompleted = event => {
 const undo = () => {
     isEdit.value = false
     editingTask.value = props.task.name
+}
+
+const removeTask = () => {
+    if (confirm('Tem certeza ?')) {
+        emit('removed', props.task)
+    }
 }
 
 </script>
