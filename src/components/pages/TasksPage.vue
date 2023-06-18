@@ -4,33 +4,25 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <!-- Add new Task -->
-                     <NewTask @added="handleAddedTask" />   
+                    <NewTask @added="handleAddedTask" />
 
                     <!-- List of uncompleted tasks -->
-                    <Tasks :tasks="uncompletedTasks" 
-                        @updated="handleUpdatedTask"
-                        @completed="handleCompletedTask"
-                        @removed="handleRemovedTask"
-                    />
+                    <Tasks :tasks="uncompletedTasks" @updated="handleUpdatedTask" @completed="handleCompletedTask"
+                        @removed="handleRemovedTask" />
                     <!-- List of uncompleted tasks -->
 
                     <!-- show toggle button -->
                     <div class="text-center my-3" v-show="showToggleCompletedBtn">
-                        <button class="btn btn-sm btn-secondary" 
-                            @click="showCompletedTasks = !showCompletedTasks">
+                        <button class="btn btn-sm btn-secondary" @click="showCompletedTasks = !showCompletedTasks">
                             <span v-if="!showCompletedTasks">Show Completed</span>
                             <span v-else>Hide Completed</span>
                         </button>
                     </div>
-                    <!-- show toggle button -->
+                    <!-- show toggle button -->                  
 
                     <!-- list of completed task -->
-                    <Tasks :tasks="completedTasks" 
-                        :show="completedTasksIsVisible && showCompletedTasks" 
-                        @updated="handleUpdatedTask"
-                        @completed="handleCompletedTask"
-                        @removed="handleRemovedTask"
-                    />
+                    <Tasks :tasks="completedTasks" :show="completedTasksIsVisible && showCompletedTasks"
+                        @updated="handleUpdatedTask" @completed="handleCompletedTask" @removed="handleRemovedTask" />
                     <!-- list of completed task -->
                 </div>
             </div>
@@ -70,9 +62,14 @@ const completedTasksIsVisible = computed(
 const showCompletedTasks = ref(false)
 
 const handleAddedTask = async (newTask) => {
-   const { data: createdTask } = await createTask(newTask)
-   // atualizando lista
-   tasks.value.unshift(createdTask.data)
+    const { data: createdTask } = await createTask(newTask)
+    // atualizando lista
+    tasks.value.unshift(createdTask.data)    
+
+    window.Toast.fire({
+        icon: 'success',
+        title: 'Operação realizada com sucesso'
+    })
 }
 
 const handleUpdatedTask = async (task) => {
@@ -94,12 +91,12 @@ const handleCompletedTask = async (task) => {
 }
 
 const handleRemovedTask = async (task) => {
-   await removeTask(task.id)
+    await removeTask(task.id)
 
-   const index = tasks.value.findIndex(item => item.id == task.id)
+    const index = tasks.value.findIndex(item => item.id == task.id)
 
-   tasks.value.splice(index, 1)
-    
+    tasks.value.splice(index, 1)
+
 }
 
 </script>
