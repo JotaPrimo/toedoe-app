@@ -43,6 +43,7 @@ import NewTask from "../../components/tasks/NewTask.vue";
 // variables
 const store = useTaskStore();
  const { completedTasks, uncompletedTasks } = storeToRefs(store)
+ const { fetchAllTasks } = store
 // store.$patch({
 //     task: {
 //         name: "First task updated with patch",
@@ -55,8 +56,7 @@ const tasks = ref([]);
 // end variables
 
 onMounted(async () => {
-    const { data } = await allTasks()
-    tasks.value = data.data   
+    await fetchAllTasks();   
 })
 
 
