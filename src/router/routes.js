@@ -9,6 +9,9 @@ const routes = [
         path: '/tasks',
         name: 'tasks',
         component: TasksPage,
+        meta: {
+            auth: true
+        }
     },
 
     {
@@ -27,6 +30,9 @@ const routes = [
         path: '/summary',
         name: 'summary',
         component: SummaryPage,
+        meta: {
+            auth: true
+        }
     },
 
     {
