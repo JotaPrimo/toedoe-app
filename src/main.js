@@ -1,6 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import { createPinia } from "pinia"
 import App from './App.vue'
 
 
@@ -24,4 +25,6 @@ const Toast = Swal.mixin({
 
 // sweet alert
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(createPinia()); // configurando pinia
+app.mount('#app');
